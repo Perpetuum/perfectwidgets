@@ -1,0 +1,27 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>TypeScript HTML App</title>
+
+    <!--ScriptSharp library-->
+    <script src="Scripts/mscorlib.js" type="text/javascript"></script>
+    <!--Perfectwidgets library-->
+    <script src="Scripts/PerfectWidgets.js" type="text/javascript"></script>
+    <script src="Scripts/knockout-3.2.0.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <div>
+        <button data-bind="click: stopAnimation">Stop animation</button>
+        <button data-bind="click: startAnimation">Start animation</button>
+        <!-- ko foreach: testerControls -->
+        <br />
+        <input type="text" data-bind="value: sliderValue" />
+        <span data-bind="text: sliderName"></span>
+        <!-- /ko -->
+    </div>
+</body>
+</html>

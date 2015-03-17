@@ -1,0 +1,212 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Perfect Widgets for TypeScript sample</title>
+    <link href="Styles/Base.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function showTab(headerId, tabId) {
+            var headers = document.getElementById("tabLine").children;
+            for (var i = 0; i < headers.length; i++) {
+                headers[i].classList.remove("active");
+            }
+            var contents = document.getElementById("tabContent").children;
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("hidden");
+                contents[i].classList.add("hidden");
+            }
+            document.getElementById(headerId).classList.add("active");
+            document.getElementById(tabId).classList.remove("hidden");
+        }
+    </script>
+    <!--ScriptSharp library-->
+    <script src="Scripts/mscorlib.js" type="text/javascript"></script>
+    <!--Perfectwidgets library-->
+    <script src="Scripts/PerfectWidgets.js" type="text/javascript"></script>
+
+    <script src="app.js"></script>
+</head>
+<body>
+    <div class="background">
+        <div class="content"></div>
+    </div>
+    <div class="header">
+        <div class="content">
+            <a href="http://perfectwidgets.com/" class="topStripe">POWERFUL HTML5 (JAVASCRIPT) GAUGES FOR TYPESCRIPT</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1 class="page-title">NOW YOU CAN USE POWER OF PERFECT WIDGETS WITH... COMFORT!</h1>
+        <div class="sampleBlock">
+            
+            <div class="leftColumn">
+                <div class="liveSample">
+                    <div id="root" style="width:270px; height: 270px;"></div>
+                    <div class="controls">
+                        <div class="controlsColumn">
+                            <input type="text" id="valueTextBox1" value="10" /><br />
+                            <input type="text" id="valueTextBox2" value="10" />
+                        </div>
+                        <div class="controlsColumn">
+                            <button class="style1" id="updateButton1">Set Slider1 value</button><br />
+                            <button class="style1" id="updateButton2">Set Slider2 value</button>
+                        </div>
+                        <div class="controlsColumn">
+                            <button class="style2" id="startAnimationButton">Start animation</button><br />
+                            <button class="style2" id="stopAnimationButton">Stop animation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rightColumn">
+                
+                    <div class="tabLine" id="tabLine">
+                        <a href="#" id="index.html_header" class="tabHeader active" onclick="showTab('index.html_header','index.html')">index.html</a>
+                        <a href="#" id="app.ts_header" class="tabHeader" onclick="showTab('app.ts_header','app.ts')">app.ts</a>
+                    </div>
+                    <div id="tabContent">
+                        <div class="codeBlock hidden" id="app.ts">
+                            <pre style="margin: 0; line-height: 125%">
+<span class="remark">/// &lt;reference path=&quot;scripts/perfectwidgets.d.ts&quot; /&gt;</span>
+<span class="remark">/// &lt;reference path=&quot;scripts/widgetjson.ts&quot; /&gt;</span>
+<span class="keyword">interface</span> <span class="class">Dictionary</span>&lt;T&gt; {
+    [key: <span class="keyword">string</span>]: T;
+}
+<span class="keyword">class</span> <span class="class">TesterControl</span> {
+    slider: <span class="class">PerfectWidgets.Model.BaseElements.Slider</span>;
+    valueTextBox: <span class="class">HTMLInputElement</span>;
+    <span class="keyword">constructor</span>(
+        sliderTest: <span class="class">PerfectWidgets.Model.BaseElements.Slider</span>,
+        textBox: <span class="class">HTMLInputElement</span>) {
+        <span class="keyword">this</span>.slider = sliderTest;
+        <span class="keyword">this</span>.slider.addValueChangedHandler(<span class="keyword">this</span>.updateTextBox.bind(<span class="keyword">this</span>));
+        <span class="keyword">this</span>.valueTextBox = textBox;
+    }
+    updateSlider() {
+        <span class="keyword">this</span>.slider.setValue(parseFloat(<span class="keyword">this</span>.valueTextBox.value), <span class="keyword">true</span>)
+    }
+    updateTextBox() {
+        <span class="keyword">this</span>.valueTextBox.value = <span class="keyword">this</span>.slider.getValue().toString();
+    }
+}
+<span class="keyword">class</span> <span class="class">WidgetDemo</span> {
+    widget: <span class="class">PerfectWidgets.Widget</span>;
+    testerContols: <span class="class">Dictionary</span>&lt;<span class="class">TesterControl</span>&gt;;
+    animationIntervalId: <span class="keyword">number</span>;
+    <span class="keyword">constructor</span>(id: <span class="keyword">string</span>) {
+        <span class="keyword">this</span>.widget = <span class="keyword">new</span> <span class="class">PerfectWidgets.Widget</span>(id, WidgetJson.Widget1);
+        <span class="keyword">this</span>.testerContols = {};
+    }
+    addTesterControl(sliderId: <span class="keyword">string</span>, textBoxId: <span class="keyword">string</span>, updateButtonId: <span class="keyword">string</span>) {
+        <span class="keyword">var</span> testerControl = <span class="keyword">new</span> <span class="class">TesterControl</span>(
+            &lt;<span class="class">PerfectWidgets.Model.BaseElements.Slider</span>&gt; <span class="keyword">this</span>.widget.getByName(sliderId),
+            &lt;<span class="class">HTMLInputElement</span>&gt; document.getElementById(textBoxId));
+        document.getElementById(updateButtonId).addEventListener(
+            <span class="string">&quot;click&quot;</span>,
+            testerControl.updateSlider.bind(testerControl));
+        <span class="keyword">this</span>.testerContols[sliderId] = testerControl;
+    }
+    startAnimation() {
+        <span class="keyword">this</span>.stopAnimation();
+        <span class="keyword">this</span>.animationIntervalId = setInterval(<span class="keyword">this</span>.animate.bind(<span class="keyword">this</span>), 2000);
+    }
+    stopAnimation() {
+        clearInterval(<span class="keyword">this</span>.animationIntervalId);
+    }
+    animate() {
+        <span class="keyword">for</span> (<span class="keyword">var</span> id <span class="keyword">in</span> <span class="keyword">this</span>.testerContols) {
+        <span class="keyword">this</span>.testerContols[id].slider.setValue(<span class="class">Math</span>.floor((<span class="class">Math</span>.random() * 40) + 1), <span class="keyword">true</span>);
+        }
+    }
+}
+window.onload = () =&gt; {
+    <span class="keyword">var</span> demo = <span class="keyword">new</span> <span class="class">WidgetDemo</span>(<span class="string">&quot;root&quot;</span>);
+    demo.addTesterControl(<span class="string">&quot;Slider1&quot;</span>, <span class="string">&quot;valueTextBox1&quot;</span>, <span class="string">&quot;updateButton1&quot;</span>);
+    demo.addTesterControl(<span class="string">&quot;Slider2&quot;</span>, <span class="string">&quot;valueTextBox2&quot;</span>, <span class="string">&quot;updateButton2&quot;</span>);
+    demo.startAnimation();
+    document.getElementById(<span class="string">&quot;startAnimationButton&quot;</span>).addEventListener(
+        <span class="string">&quot;click&quot;</span>,
+        demo.startAnimation.bind(demo));
+    document.getElementById(<span class="string">&quot;stopAnimationButton&quot;</span>).addEventListener(
+        <span class="string">&quot;click&quot;</span>,
+        demo.stopAnimation.bind(demo));
+};
+                        </pre>
+                        </div>
+                        <div class="codeBlock" id="index.html">
+                            <pre style="margin: 0; line-height: 125%">
+<span class="keyword">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;
+&lt;head&gt;
+    &lt;meta charset=<span class="string">&quot;utf-8&quot;</span> /&gt;
+    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;IE=Edge&quot;</span> /&gt;
+    &lt;title&gt;TypeScript HTML App&lt;/title&gt;
+    <span class="remark">&lt;!--ScriptSharp library--&gt;</span>
+    &lt;script src=<span class="string">&quot;Scripts/mscorlib.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;
+    <span class="remark">&lt;!--Perfectwidgets library--&gt;</span>
+    &lt;script src=<span class="string">&quot;Scripts/PerfectWidgets.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;
+    &lt;script src=<span class="string">&quot;app.js&quot;</span>&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=<span class="string">&quot;root&quot;</span>&gt;&lt;/div&gt;
+    &lt;div&gt;
+        &lt;button id=<span class="string">&quot;stopAnimationButton&quot;</span>&gt;Stop animation&lt;/button&gt;
+        &lt;button id=<span class="string">&quot;startAnimationButton&quot;</span>&gt;Start animation&lt;/button&gt;
+        &lt;br /&gt;
+        &lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;valueTextBox1&quot;</span> value=<span class="string">&quot;10&quot;</span> /&gt;
+        &lt;button id=<span class="string">&quot;updateButton1&quot;</span>&gt;Set Slider1 value&lt;/button&gt;
+        &lt;br /&gt;
+        &lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;valueTextBox2&quot;</span> value=<span class="string">&quot;10&quot;</span> /&gt;
+        &lt;button id=<span class="string">&quot;updateButton2&quot;</span>&gt;Set Slider2 value&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                        </pre>
+                        </div>
+                    </div>
+                    <div class="textCenterer">
+                        <a href="Downloads/TypeScriptSample.zip" class="downloadSampleButton"></a>
+                    </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="tutorialBlock">
+            <div class="tutorialHeader">
+                <h1>Just three easy steps to get html5 gauges working with TypeScript</h1>
+            </div>
+            <div class="leftColumn">
+                <div class="step">
+                    <h1>STEP ONE</h1>
+                    <p>Download the typescript definition file<br /></p>
+                    <a class="downloadButton" href="Downloads/PerfectWidgets.d.ts.zip"></a>
+                </div>
+                <div class="step">
+                    <h1>STEP TWO</h1>
+                    <p>Include it into your typescript project<br /></p>
+                    <div class="smallCodeblock">
+                        <span class="remark">///&lt;reference path=&quot;perfectwidgets.d.ts&quot;/&gt;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="rightColumn">
+                <div class="wideStep">
+                    <h1>STEP THREE</h1>
+                    <p>Get Perfect Widgets API highlighted in Visual Studio</p>
+                    <img src="Img/HavingFun.png" />
+                </div>
+            </div>
+            
+            <div class="tutorialHeader">
+                <a href="http://perfectwidgets.com/order/download"><h1>DOWNLOAD PERFECT WIDGETS!</h1></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="content">
+            <p>&copy; 2002 - <span id="nowYear">2014</span> Perpetuum Software LLC The company of Enterra Inc. <a href="#">Terms Of Use</a> <a href="#">PrivacyPolicy</a> <a href="#">Site Map</a> </p>
+        </div>
+    </div>
+</body>
+</html>

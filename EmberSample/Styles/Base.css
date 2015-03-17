@@ -1,0 +1,430 @@
+﻿body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.background {
+    background-image: url(../Img/topBackgroundSide.png);
+    position: absolute;
+    background-repeat: repeat-x;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+    .background .content {
+        background-image: url(../Img/topBackground.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 243px;
+        width: 100%;
+    }
+
+.page-title {
+    font-family: "Segoe Script", "Comic Sans MS", cursive, sans-serif;
+    font-size: 24px;
+    text-align: center;
+    margin: 8px 0px;
+    color: white;
+}
+
+.header {
+}
+
+    .header .content {
+        background-color: rgb(0, 99, 184);
+    }
+
+.footer {
+    background-color: #718CA3;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+    font-size: 10px;
+    height: 9px;
+    padding: 12px 0px 28px 0px;
+}
+
+.footer a {
+    color: white;
+}
+
+.sampleBlock {
+    position: relative;
+    /*overflow: auto;*/
+}
+
+/*#region Sample*/
+.liveSample {
+    display: inline-block;
+    background-color: rgb(0, 99, 184);
+    width: 350px;
+    height: 328px;
+    padding: 14px 0px 8px 0px;
+    text-align: center;
+}
+
+#root {
+    margin: 0px auto;
+}
+
+    .liveSample .controls {
+        margin-top: 8px;
+    }
+        
+    .liveSample span {
+        color: white;
+        font-family: monospace;
+    }
+
+    .liveSample button, .liveSample input[type=text] {
+        margin: 2px 0px;
+        font-family: sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        vertical-align: top;
+        height: 22px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .liveSample button {
+        width: 100%;
+    }
+
+    .liveSample input[type="text"] {
+        width: 20px;
+    }
+
+    .controlsColumn {
+        display: inline-block;
+        padding-right: 2px;
+    }
+/*#endregion*/
+
+.leftColumn {
+    width: 350px;
+    float: left;
+}
+
+.rightColumn {
+    width: 626px;
+    margin-left: 370px;
+}
+
+.content {
+    width: 996px;
+    margin: 0px auto;
+}
+
+.topStripe {
+    background-image: url(../Img/topStripe.png);
+    display: block;
+    height: 39px;
+    padding: 20px 0px 0px 50px;
+    font: bold 16px arial;
+    text-decoration: none;
+    color: white;
+}
+
+.bottomStripe {
+    background-image: url(../Img/topStripe.png);
+    display: block;
+    height: 39px;
+    padding: 20px 0px 0px 50px;
+    font: bold 16px arial;
+    text-decoration: none;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.codeBlock {
+    height: 252px;
+    background: #ffffff;
+    overflow-y: scroll;
+    border: solid #0063B8;
+    border-width: 5px;
+    padding: 0px 0px 0px 10px;
+    margin-bottom: 13px;
+}
+
+.tabHeader.active {
+    position: relative;
+    background-color: #0063B8;
+}
+
+.tabHeader {
+    display: inline-block;
+    background-color: #FF9B33;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 10px 3px 10px;
+    font-family: arial;
+    width: 100px;
+}
+
+.description .icon {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: -5px;
+}
+.description .text {
+    margin-top: 42px;
+    margin-left: -5px;
+}
+
+.keyword {
+    color: #0000ff;
+}
+
+.class {
+    color: #2b91af;
+}
+
+.remark {
+    color: #008000;
+}
+
+.string {
+    color: #a31515;
+}
+
+.tutorialHeader {
+    color: rgb(0, 99, 184);
+    overflow: auto;
+}
+
+    .tutorialHeader h1 {
+        text-align: center;
+        font-family: "Segoe UI Symbol", "Lucida Console", Monaco, monospace;
+        font-weight: 100;
+        margin: 10px 0px;
+        clear: both;
+    }
+
+    .tutorialHeader a {
+        text-decoration: none;
+        color: rgb(0, 99, 184);
+    }
+
+.tutorialHeader {
+    color: rgb(0, 99, 184);
+    overflow: auto;
+}
+
+    .tutorialHeader h1 {
+        text-align: center;
+        font-weight: 100;
+        margin: 10px 0px;
+        clear: both;
+    }
+
+    .tutorialHeader a {
+        text-decoration: none;
+        color: rgb(0, 99, 184);
+    }
+
+.tutorialBlock {
+    text-align: center;
+}
+.fullStep
+{
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.step,
+.wideStep,
+.tallStep,
+.fullStep
+{
+    background-color: #FFDCB7;
+}
+.tallStep
+{
+    height: 100%;
+}
+.tallStepContent
+{
+    padding: 15px;
+    text-align: left;
+}
+.tallStep h1
+{
+    float: left;
+    margin: -20px 0 0 -50px;
+    text-align: right;
+    width: 50px;
+}
+
+.tallStep p,
+.fullStep p
+{
+    margin: 0px;
+}
+.tallStep pre
+{
+    margin: 0px;
+}
+.tallStep .smallCodeblock {
+    background-color: white;
+    text-align: left;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 15px 15px;
+    margin: 10px 0px 10px 0px;
+}
+.step {
+    overflow: auto;
+    font-size: 16px;
+    width: 350px;
+    height: 133px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.step + .step {
+    margin-bottom: 0px;
+}
+
+    .step h1,
+    .wideStep h1 {
+        text-align: left;
+        font-size: 32px;
+        margin: 0px 0px 0px 10px;
+        color: white;
+    }
+
+    .step p {
+        margin: 10px 0px;
+    }
+
+.wideStep {
+    overflow: hidden;
+    font-size: 16px;
+    height: auto;
+    text-align: center;
+    width: 626px;
+    height: 286px;
+}
+
+    .wideStep p {
+        margin: 0px 0px 4px 0px;
+    }
+
+    .wideStep img {
+        width: auto;
+    }
+
+.oldDownloadButton {
+    width: 308px;
+    height: 30px;
+    padding-top: 5px;
+    display: inline-block;
+    border: solid #FF9B33 5px;
+    font-family: Arial;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #FF9B33;
+    color: white;
+    text-decoration: none;
+}
+
+    .oldDownloadButton:hover {
+        border-color: #FF9B33;
+        color: #FF9B33;
+        background-color: white;
+    }
+
+.downloadButton {
+    width: 318px;
+    height: 45px;
+    display: inline-block;
+    background-image: url("../Img/bt_download_pw.png");
+    background-position: 0px 0px;
+}
+.downloadButton:hover {
+    background-position: 0px -45px;
+}   
+.downloadButton:active {
+    background-position: 0px -90px;
+}
+.downloadSampleButton {
+    width: 350px;
+    height: 45px;
+    display: inline-block;
+    background-image: url("../Img/bt_download_sample_pw.png");
+    background-position: 0px 0px;
+}
+.downloadSampleButton:hover {
+    background-position: 0px -45px;
+}
+.downloadSampleButton:active {
+    background-position: 0px -90px;
+}
+.textCenterer {
+    text-align: center;
+}
+.smallCodeblock {
+    background-color: white;
+    text-align: left;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 14px 9px;
+    margin: 0px 16px;
+}
+/*#region Fonts*/
+.wideStep,
+.step,
+.tutorialHeader h1
+{
+    font-family: "Segoe UI Symbol", Monaco, sans-serif, monospace;
+}
+
+.step h1,
+.wideStep h1,
+.footer
+{
+    font-family: Arial;
+}
+
+.codeBlock pre,
+.smallCodeblock
+{
+    font-family: Consolas 'Courier New' monospace;
+    font-size: 12px;
+}
+
+.page-title
+{
+    font-family: "Segoe Script", "Comic Sans MS", cursive, sans-serif;
+}
+
+.topStripe
+{
+    font: normal normal 600 16px/18px Verdana, Geneva, sans-serif;
+}
+.description .text {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+}
+.tallStep,
+.fullStep
+{
+    font-family: Verdana, "Segoe UI Symbol", Geneva, Monaco, sans-serif, monospace;
+    font-size: 12px;
+}
+.tallStep h1
+{
+    font-family: "Segoe UI", Monaco, sans-serif, monospace;
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+}
+
+/*#endregion*/

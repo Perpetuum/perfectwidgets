@@ -1,0 +1,354 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Perfect Widgets for Knockout.js sample</title>
+    
+    <link href="Styles/Base.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function showTab(headerId, tabId) {
+            var headers = document.getElementById("tabLine").children;
+            for (var i = 0; i < headers.length; i++) {
+                headers[i].classList.remove("active");
+            }
+            var contents = document.getElementById("tabContent").children;
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("hidden");
+                contents[i].classList.add("hidden");
+            }
+            document.getElementById(headerId).classList.add("active");
+            document.getElementById(tabId).classList.remove("hidden");
+        }
+    </script>
+    <!--ScriptSharp library-->
+    <script src="Scripts/mscorlib.js" type="text/javascript"></script>
+    <!--Perfectwidgets library-->
+    <script src="Scripts/PerfectWidgets.js" type="text/javascript"></script>
+    <script src="Scripts/knockout-3.2.0.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div class="background">
+        <div class="content"></div>
+    </div>
+    <div class="header">
+        <div class="content">
+            <a href="http://perfectwidgets.com/" class="topStripe">POWERFUL HTML5 (JAVASCRIPT) GAUGES FOR KNOCKOUT.JS</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1 class="page-title">NOW YOU CAN USE POWER OF PERFECT WIDGETS WITH... COMFORT!</h1>
+        <div class="sampleBlock">
+            
+            <div class="leftColumn">
+                <div class="liveSample">
+                    <div id="root" style="width:270px; height: 270px;"></div>
+                    <div class="controls">
+                        <div class="controlsColumn">
+                            <!-- ko foreach: testerControls.slice(0,testerControls().length/2) -->
+                            <input type="text" data-bind="value: sliderValue" />
+                            <span data-bind="text: sliderName"></span><br />
+                            <!-- /ko -->
+                            <button data-bind="click: stopAnimation">Stop animation</button>
+                        </div>
+                        <div class="controlsColumn">
+                            <!-- ko foreach: testerControls.slice(testerControls().length/2) -->
+                            <input type="text" data-bind="value: sliderValue" />
+                            <span data-bind="text: sliderName"></span><br />
+                            <!-- /ko -->
+                            <button data-bind="click: startAnimation">Start animation</button>
+                        </div>
+
+                        
+                        
+                        
+                        </div>
+                </div>
+            </div>
+            <div class="rightColumn">
+                <div class="tabLine" id="tabLine">
+                    <a href="#" id="description_header" class="tabHeader active" onclick="showTab('description_header','description')">Description</a>
+                    <a href="#" id="index.html_header" class="tabHeader" onclick="showTab('index.html_header','index.html')">index.html</a>
+                    <a href="#" id="app.ts_header" class="tabHeader" onclick="showTab('app.ts_header','app.ts')">app.ts</a>
+                    <a href="#" id="app.js_header" class="tabHeader" onclick="showTab('app.js_header','app.js')">app.js</a>
+                </div>
+                <div id="tabContent">
+                        <div class="codeBlock hidden" id="app.ts">
+                            <pre style="margin: 0; line-height: 125%">
+<span class="remark">/// &lt;reference path=&quot;scripts/perfectwidgets.d.ts&quot; /&gt;</span>
+<span class="remark">/// &lt;reference path=&quot;scripts/widgetjson.ts&quot; /&gt;</span>
+<span class="keyword">class</span> <span class="class">KnockoutBindingHelper</span> {
+    <span class="keyword">static</span> BindSliderByName(
+            widget: <span class="class">PerfectWidgets.Widget</span>,
+            slider: <span class="keyword">string</span>,
+            observable: <span class="class">KnockoutObservable</span>&lt;<span class="keyword">number</span>&gt;) {
+        <span class="keyword">var</span> sliderObject = &lt;<span class="class">PerfectWidgets.Model.BaseElements.Slider</span>&gt; widget.getByName(slider);
+        <span class="keyword">this</span>.BindSlider(sliderObject, observable);
+    }
+    <span class="keyword">static</span> BindSlider(
+            slider: <span class="class">PerfectWidgets.Model.BaseElements.Slider</span>,
+            observable: <span class="class">KnockoutObservable</span>&lt;<span class="keyword">number</span>&gt;) {
+        slider.addValueChangedHandler(<span class="keyword">function</span> () {
+            observable(slider.getValue());
+        });
+        observable.subscribe(<span class="keyword">function</span> (newValue) {
+            slider.setValue(newValue, <span class="keyword">true</span>);
+        });
+        observable(slider.getValue());
+    }
+}
+<span class="keyword">class</span> <span class="class">TesterControl</span> {
+    sliderValue: <span class="class">KnockoutObservable</span>&lt;<span class="keyword">number</span>&gt;;
+    sliderName: <span class="class">KnockoutObservable</span>&lt;<span class="keyword">string</span>&gt;;
+    <span class="keyword">constructor</span>(widget: <span class="class">PerfectWidgets.Widget</span>, sliderName: <span class="keyword">string</span>) {
+        <span class="keyword">this</span>.sliderValue = ko.observable(0);
+        <span class="keyword">this</span>.sliderName = ko.observable(sliderName);
+        <span class="class">KnockoutBindingHelper</span>.BindSliderByName(
+                widget,
+                sliderName, 
+                <span class="keyword">this</span>.sliderValue);
+    }
+}
+<span class="keyword">class</span> <span class="class">WidgetDemo</span> {
+    widget: <span class="class">PerfectWidgets.Widget</span>;
+    testerControls: <span class="class">KnockoutObservableArray</span>&lt;<span class="class">TesterControl</span>&gt;;
+    animationIntervalId: <span class="keyword">number</span>;
+    <span class="keyword">constructor</span>(id: <span class="keyword">string</span>) {
+        <span class="keyword">this</span>.widget = <span class="keyword">new</span> <span class="class">PerfectWidgets.Widget</span>(id, <span class="class">WidgetJson</span>.Widget1);
+        <span class="keyword">this</span>.testerControls = ko.observableArray&lt;<span class="class">TesterControl</span>&gt;();
+    }
+    addTesterControl(sliderName: <span class="keyword">string</span>) {
+        <span class="keyword">var</span> testerControl = <span class="keyword">new</span> <span class="class">TesterControl</span>(<span class="keyword">this</span>.widget, sliderName);
+        <span class="keyword">this</span>.testerControls.push(testerControl);
+    }
+    startAnimation() {
+        <span class="keyword">this</span>.stopAnimation();
+        <span class="keyword">this</span>.animationIntervalId = setInterval(<span class="keyword">this</span>.animate.bind(<span class="keyword">this</span>), 2000);
+    }
+    stopAnimation() {
+        clearInterval(<span class="keyword">this</span>.animationIntervalId);
+    }
+    animate() {
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = 0; i &lt; <span class="keyword">this</span>.testerControls().length; i++) {
+        <span class="keyword">this</span>.testerControls()[i].sliderValue(<span class="class">Math</span>.floor((<span class="class">Math</span>.random() * 40) + 1));
+        }
+    }
+}
+window.onload = () =&gt; {
+    <span class="keyword">var</span> demo = <span class="keyword">new</span> <span class="class">WidgetDemo</span>(<span class="string">&quot;root&quot;</span>);
+    demo.addTesterControl(<span class="string">&quot;Slider1&quot;</span>);
+    demo.addTesterControl(<span class="string">&quot;Slider2&quot;</span>);
+    ko.applyBindings(demo);
+    demo.startAnimation();
+    document.getElementById(<span class="string">&quot;nowYear&quot;</span>).innerText = (<span class="keyword">new</span> <span class="class">Date</span>()).getFullYear().toString();
+};
+
+                        </pre>
+                        </div>
+                        <div class="codeBlock hidden" id="index.html">
+                            <pre style="margin: 0; line-height: 125%">
+<span class="keyword">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;
+&lt;head&gt;
+    &lt;meta charset=<span class="string">&quot;utf-8&quot;</span> /&gt;
+    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;IE=Edge&quot;</span> /&gt;
+    &lt;title&gt;TypeScript HTML App&lt;/title&gt;
+    <span class="remark">&lt;!--ScriptSharp library--&gt;</span>
+    &lt;script src=<span class="string">&quot;../Scripts/mscorlib.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;
+    <span class="remark">&lt;!--Perfectwidgets library--&gt;</span>
+    &lt;script src=<span class="string">&quot;../Scripts/PerfectWidgets.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;
+    &lt;script src=<span class="string">&quot;Scripts/knockout-3.2.0.js&quot;</span>&gt;&lt;/script&gt;
+    &lt;script src=<span class="string">&quot;app.js&quot;</span>&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=<span class="string">&quot;root&quot;</span>&gt;&lt;/div&gt;
+    &lt;div&gt;
+        &lt;button data-bind=<span class="string">&quot;click: stopAnimation&quot;</span>&gt;Stop animation&lt;/button&gt;
+        &lt;button data-bind=<span class="string">&quot;click: startAnimation&quot;</span>&gt;Start animation&lt;/button&gt;
+        <span class="remark">&lt;!-- ko foreach: testerControls --&gt;</span>
+        &lt;br /&gt;
+        &lt;input type=<span class="string">&quot;text&quot;</span> data-bind=<span class="string">&quot;value: sliderValue&quot;</span> /&gt;
+        &lt;span data-bind=<span class="string">&quot;text: sliderName&quot;</span>&gt;&lt;/span&gt;
+        <span class="remark">&lt;!-- /ko --&gt;</span>
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                        </pre>
+                        </div>
+                        <div id="app.js" class="codeBlock hidden">
+                            <pre style="margin:0; line-height:125%;">
+<span class="keyword">var</span> KnockoutBindingHelper = (<span class="keyword">function</span> () {
+    <span class="keyword">function</span> KnockoutBindingHelper() {
+    }
+    KnockoutBindingHelper.BindSliderByName = <span class="keyword">function</span> (widget, slider, observable) {
+        <span class="keyword">var</span> sliderObject = widget.getByName(slider);
+        <span class="keyword">this</span>.BindSlider(sliderObject, observable);
+    };
+    KnockoutBindingHelper.BindSlider = <span class="keyword">function</span> (slider, observable) {
+        slider.addValueChangedHandler(<span class="keyword">function</span> () {
+            observable(slider.getValue());
+        });
+        observable.subscribe(<span class="keyword">function</span> (newValue) {
+            slider.setValue(newValue, <span class="keyword">true</span>);
+        });
+        observable(slider.getValue());
+    };
+    <span class="keyword">return</span> KnockoutBindingHelper;
+})();
+<span class="keyword">var</span> TesterControl = (<span class="keyword">function</span> () {
+    <span class="keyword">function</span> TesterControl(widget, sliderName) {
+        <span class="keyword">this</span>.sliderValue = ko.observable(0);
+        <span class="keyword">this</span>.sliderName = ko.observable(sliderName);
+        KnockoutBindingHelper.BindSliderByName(widget, sliderName, <span class="keyword">this</span>.sliderValue);
+    }
+    <span class="keyword">return</span> TesterControl;
+})();
+<span class="keyword">var</span> WidgetDemo = (<span class="keyword">function</span> () {
+    <span class="keyword">function</span> WidgetDemo(id) {
+        <span class="keyword">this</span>.widget = <span class="keyword">new</span> PerfectWidgets.Widget(id, WidgetJson.Widget1);
+        <span class="keyword">this</span>.testerControls = ko.observableArray();
+    }
+    WidgetDemo.prototype.addTesterControl = <span class="keyword">function</span> (sliderName) {
+        <span class="keyword">var</span> testerControl = <span class="keyword">new</span> TesterControl(<span class="keyword">this</span>.widget, sliderName);
+        <span class="keyword">this</span>.testerControls.push(testerControl);
+    };
+    WidgetDemo.prototype.startAnimation = <span class="keyword">function</span> () {
+        <span class="keyword">this</span>.stopAnimation();
+        <span class="keyword">this</span>.animationIntervalId = setInterval(<span class="keyword">this</span>.animate.bind(<span class="keyword">this</span>), 2000);
+    };
+    WidgetDemo.prototype.stopAnimation = <span class="keyword">function</span> () {
+        clearInterval(<span class="keyword">this</span>.animationIntervalId);
+    };
+    WidgetDemo.prototype.animate = <span class="keyword">function</span> () {
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = 0; i &lt; <span class="keyword">this</span>.testerControls().length; i++) {
+            <span class="keyword">this</span>.testerControls()[i].sliderValue(Math.floor((Math.random() * 40) + 1));
+        }
+    };
+    <span class="keyword">return</span> WidgetDemo;
+})();
+window.onload = <span class="keyword">function</span> () {
+    <span class="keyword">var</span> demo = <span class="keyword">new</span> WidgetDemo(<span style="color: #a31515">&quot;root&quot;</span>);
+    demo.addTesterControl(<span style="color: #a31515">&quot;Slider1&quot;</span>);
+    demo.addTesterControl(<span style="color: #a31515">&quot;Slider2&quot;</span>);
+    ko.applyBindings(demo);
+    demo.startAnimation();
+    document.getElementById(<span style="color: #a31515">&quot;nowYear&quot;</span>).innerText = (<span class="keyword">new</span> Date()).getFullYear().toString();
+};
+</pre>
+                        </div>
+
+                        <div id="description" class="codeBlock description">
+                            <img class="icon" src="Img/logo.png" width="236" height="152" />
+                            <div class="text" style="margin-top:56px;">
+                                This sample shows how to use Perfect Widgets together with Knockout.js
+                                bindings. Knockout.js implements MVVM ideology with the help of custom
+                                properties of HTML tags and custom implementation of the observed objects
+                                and collections. In MVVM, data is stored separately from its view, and
+                                view is updated according to data change with the help of bindings.<br />
+                                <br />
+                                The
+                                sample demonstrates one of the possible implementations of such binding
+                                between the Knockout.js model and sliders of Perpetuum gauges and the
+                                model itself is bound to text fields. Thus, change of any of these three
+                                objects leads to update of the status of the remaining two objects.
+                            </div>
+                        </div>
+                </div>
+                <div class="textCenterer">
+                    <a href="Downloads/KnockoutJsSample.zip" class="downloadSampleButton"></a>
+                </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="tutorialBlock">
+            <div class="tutorialHeader">
+                <h1>HOW-TO SECTION: BINDING SLIDER TO KO_OBSERVABLE</h1>
+            </div>
+            <div class="fullStep">
+                <p>
+                    We just need to subscribe for 'value-changed' events of each of them and set corresponding
+                    values when these events occur.
+                </p>
+            </div>
+            <div class="heightEqualizer">
+                <div class="leftColumn">
+                    <div class="tallStep">
+                        <div class="tallStepContent">
+                            <h1>1</h1>
+                            <p>Subscribe for the slider 'value-changed' event:</p>
+                            <div class="smallCodeblock">
+                                <pre>
+<span class="remark">//get the slider object</span>
+<span class="keyword">var</span> slider = widget.getByName(
+  <span class="string">'yourSlider'</span>);
+<span class="remark">//subscribe the anonymous function</span>
+slider.addValueChangedHandler(
+  <span class="keyword">function</span>(){
+<span class="remark">//renew observable's value from slider</span>
+    yourObservable(slider.getValue());
+});</pre>
+                            </div>
+                            <h1>2</h1>
+                            <p>Subscribe for the observable 'value-changed' event:</p>
+                            <div class="smallCodeblock" style="margin-bottom: 0px;">
+                                <pre>
+<span class="remark">//new numeric observable</span>
+<span class="keyword">var</span> yourObservable = ko.observable(0);
+<span class="remark">//subscribe to value changes</span>    
+yourObservable.subscribe(
+  <span class="keyword">function</span>(newValue){
+<span class="remark">//apply new value to slider</span>
+    slider.setValue(newValue, <span class="keyword">true</span>);
+});</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rightColumn">
+                    <div class="tallStep">
+                        <div class="tallStepContent">
+                            <p>Or you can combine that into a single helper class as the sample demonstrates:</p>
+                            <div class="smallCodeblock" style="margin-bottom: 0px;">
+                                <pre>
+<span class="keyword">var</span> KnockoutBindingHelper = (<span class="keyword">function</span> () {
+    <span class="keyword">function</span> KnockoutBindingHelper() {}
+
+    KnockoutBindingHelper.BindSliderByName = <span class="keyword">function</span>(
+    widget,
+    slider,
+    observable){
+        <span class="keyword">var</span> sliderObject = widget.getByName(slider);
+        <span class="keyword">this</span>.BindSlider(sliderObject, observable);
+    };
+
+    KnockoutBindingHelper.BindSlider = <span class="keyword">function</span>(slider, observable){
+        slider.addValueChangedHandler(<span class="keyword">function</span> () {
+            observable(slider.getValue());
+        });
+        observable.subscribe(<span class="keyword">function</span> (newValue) {
+            slider.setValue(newValue, <span class="keyword">true</span>);
+        });
+        observable(slider.getValue());
+    };
+    <span class="keyword">return</span> KnockoutBindingHelper;
+})();</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div class="tutorialHeader">
+                <a href="http://perfectwidgets.com/order/download"><h1>DOWNLOAD PERFECT WIDGETS!</h1></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="content">
+            <p>&copy; 2002 - <span id="nowYear">2000</span> Perpetuum Software LLC The company of Enterra Inc. <a href="#">Terms Of Use</a> <a href="#">PrivacyPolicy</a> <a href="#">Site Map</a> </p>
+        </div>
+    </div>
+</body>
+</html>

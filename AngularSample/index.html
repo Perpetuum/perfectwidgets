@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="Demo">
+<head>
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <!--ScriptSharp library-->
+    <script src="Scripts/mscorlib.js" type="text/javascript"></script>
+    <!--Perfectwidgets library-->
+    <script src="Scripts/PerfectWidgets.js" type="text/javascript"></script>
+    <!--Widget JSON-->
+    <script src="Scripts/widgetJson.js" type="text/javascript"></script>
+    <!--Angular-->
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <!--Application logic-->
+    <script src="Scripts/app.js" type="text/javascript"></script>
+</head>
+<body ng-controller="AppController">
+	<!--widget will be in the div below-->
+	<div id="root">
+	</div>
+	<div>
+		Slider1 Value:<input type="text" ng-model="model.Slider1Value" id="valbox" value="20"/></br>
+		Slider2 Value:<input type="text" ng-model="model.Slider2Value" id="valbox" value="10"/></br>
+		<button ng-click="startAnimation()">Start animation</button>
+		<button ng-click="stopAnimation()">Stop animation</button>
+	</div>
+</body>
+</html>

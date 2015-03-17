@@ -1,0 +1,252 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="Demo">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>PerfectWidgets Ember.js demo</title>
+    <link href="Styles/Base.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function showTab(headerId, tabId) {
+            var headers = document.getElementById("tabLine").children;
+            for (var i = 0; i < headers.length; i++) {
+                headers[i].classList.remove("active");
+            }
+            var contents = document.getElementById("tabContent").children;
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("hidden");
+                contents[i].classList.add("hidden");
+            }
+            document.getElementById(headerId).classList.add("active");
+            document.getElementById(tabId).classList.remove("hidden");
+        }
+    </script>
+    <!--ScriptSharp library-->
+    <script src="Scripts/mscorlib.js" type="text/javascript"></script>
+    <!--Perfectwidgets library-->
+    <script src="Scripts/PerfectWidgets.js" type="text/javascript"></script>
+    <script src="Scripts/WidgetJson.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/x-handlebars">
+    <div class="background">
+        <div class="content"></div>
+    </div>
+    <div class="header">
+        <div class="content">
+            <a href="http://perfectwidgets.com/" class="topStripe">POWERFUL HTML5 (JAVASCRIPT) GAUGES FOR EMBER.JS</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1 class="page-title">NOW YOU CAN USE POWER OF PERFECT WIDGETS WITH... COMFORT!</h1>
+        <div class="sampleBlock">
+            
+            <div class="leftColumn">
+                <div class="liveSample" ng-controller="AppController">
+                    {{outlet}}
+                </div>
+            </div>
+            <div class="rightColumn">
+                    <div class="tabLine" id="tabLine">
+                        <a href="#" id="description_header" class="tabHeader active" onclick="showTab('description_header','description')">Description</a>
+                        <a href="#" id="index.html_header" class="tabHeader" onclick="showTab('index.html_header','index.html')">index.html</a>
+                        <a href="#" id="app.js_header" class="tabHeader" onclick="showTab('app.js_header','app.js')">app.js</a>
+                    </div>
+                    <div id="tabContent">
+                        <div class="codeBlock hidden" id="index.html">
+                            <pre style="margin: 0; line-height: 125%"><span class="keyword">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;
+  &lt;title&gt;Ember Starter Kit&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;script type=<span class="string">&quot;text/x-handlebars&quot;</span> data-template-name=<span class="string">&quot;widget&quot;</span>&gt;
+    &lt;div id=<span class="string">&quot;root&quot;</span>&gt;
+    &lt;/div&gt;</span>
+    &#123;&#123;input value=model.Slider1Value&#125;&#125;
+    &#123;&#123;input value=model.Slider2Value&#125;&#125;
+    &lt;button &#123;&#123;action <span class="string">&quot;startAnimation&quot;</span>&#125;&#125;&gt;Start animation&lt;/button&gt;</span>
+    &lt;button &#123;&#123;action <span class="string">&quot;stopAnimation&quot;</span>&#125;&#125;&gt;Stop animation&lt;/button&gt;</span>
+  &lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/mscorlib.js&quot;</span>&gt;&lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/PerfectWidgets.js&quot;</span>&gt;&lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/widgetJson.js&quot;</span>&gt;&lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/jquery-v1.11.1.js&quot;</span>&gt;&lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/handlebars-v1.3.0.js&quot;</span>&gt;&lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/ember-v1.6.1.js&quot;</span>&gt;&lt;/script&gt;
+  &lt;script src=<span class="string">&quot;Scripts/app.js&quot;</span>&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+                        </div>
+                        <div id="app.js" class="codeBlock hidden">
+                            <pre style="margin: 0; line-height: 125%">App = Ember.Application.create({});
+
+<span class="keyword">var</span> sliders = Ember.Object.extend({
+  Slider1Value: 25,
+  Slider2Value: 30
+}).create({
+  Slider1Value: 25,
+  Slider2Value: 30
+});
+
+App.Router.map(<span class="keyword">function</span>() {
+  <span class="keyword">this</span>.resource(<span class="string">&#39;widget&#39;</span>, {path: <span class="string">&#39;/&#39;</span>});
+});
+
+App.WidgetRoute = Ember.Route.extend({
+  model: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> sliders;
+  },
+  setupController: <span class="keyword">function</span>(controller, model) {
+    <span class="keyword">this</span>._super(controller, model);
+    controller.send(<span class="string">&#39;startAnimation&#39;</span>);
+  }
+});
+
+App.WidgetController = Ember.ObjectController.extend({
+  animationTimeoutId: 0,
+  animate: <span class="keyword">function</span> () {
+    <span class="keyword">this</span>.set(<span class="string">&#39;model.Slider1Value&#39;</span>, Math.floor((Math.random() * 40) + 1));
+    <span class="keyword">this</span>.set(<span class="string">&#39;model.Slider2Value&#39;</span>, Math.floor((Math.random() * 40) + 1));
+    <span class="keyword">this</span>.set(<span class="string">&#39;animationTimeoutId&#39;</span>, setTimeout(<span class="keyword">this</span>.get(<span class="string">&#39;animate&#39;</span>).bind(<span class="keyword">this</span>), 2000));
+  },
+  actions: {
+    stopAnimation: <span class="keyword">function</span> () {
+      clearTimeout(<span class="keyword">this</span>.get(<span class="string">&#39;animationTimeoutId&#39;</span>));
+    },
+    startAnimation: <span class="keyword">function</span> () {
+      <span class="keyword">this</span>.send(<span class="string">&#39;stopAnimation&#39;</span>);
+      <span class="keyword">this</span>.set(<span class="string">&#39;animationTimeoutId&#39;</span>, setTimeout(<span class="keyword">this</span>.get(<span class="string">&#39;animate&#39;</span>).bind(<span class="keyword">this</span>), 2000));
+    }
+  }
+});
+
+App.WidgetView = Ember.View.extend({
+  templateName: <span class="string">&#39;widget&#39;</span>,
+  didInsertElement: <span class="keyword">function</span>() {
+    <span class="keyword">var</span> widget = <span class="keyword">new</span> PerfectWidgets.Widget(<span class="string">&quot;root&quot;</span>, WidgetJson.Widget1);
+    BindSlider(widget, <span class="string">&quot;Slider1&quot;</span>, sliders, <span class="string">&quot;Slider1Value&quot;</span>);
+    BindSlider(widget, <span class="string">&quot;Slider2&quot;</span>, sliders, <span class="string">&quot;Slider2Value&quot;</span>);
+  }
+});
+
+<span class="keyword">function</span> BindSlider(widget, sliderName, observable, property) {
+  <span class="keyword">var</span> sliderObject = widget.getByName(sliderName);
+  sliderObject.addValueChangedHandler(<span class="keyword">function</span> () {
+    observable.set(property, sliderObject.getValue());
+  })
+  observable.addObserver(property, observable, <span class="keyword">function</span> (sender, key, value, rev) {
+    sliderObject.setValue(sender.get(key));
+  })
+}
+</pre>
+                        </div>
+                        <div id="description" class="codeBlock description">
+                            <img class="icon" src="Img/ember.jpg" width="236" height="150" />
+                            <div class="text" style="margin-top: 24px;">
+                                Ember.js is an open source client JavaScript framework. Based on MVC,
+                                it helps to create scalable single-page applications using all advantages
+                                of this architecture: declarative setting of two-way data binding, calculable
+                                properties, automatically updated templates provided by the Handlebars.js
+                                library and route and URL concept defining application status. The entire user
+                                interface is a set of templates made as separate HTML fragments, using some
+                                additional tags, attributes and constructions.<br />
+                                <br />
+                                As the final page exists only in separate parts and as it is generated
+                                to a unit and is filled with data immediately before it is viewed, the
+                                use of Perfect Widgets might seem quite a complicated task. But it is not.
+                                This sample demonstrates one of the possible ways of how to add a gauge to
+                                the Ember application page and how to bind data to the slider value.
+                            </div>
+                        </div>
+                    </div>
+                <div class="textCenterer">
+                    <a href="Downloads/EmberSample.zip" class="downloadSampleButton"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tutorialBlock">
+            <div class="tutorialHeader">
+                <h1>HOW-TO SECTION: NOT ONLY BINDING</h1>
+            </div>
+            <div class="heightEqualizer">
+                <div class="leftColumn">
+                    <div class="tallStep">
+                        <div class="tallStepContent">
+                        	
+                            <h1>1</h1>
+                            <p>To create widget add script to didInsertElement event handler:</p>
+                            <div class="smallCodeblock" style="margin-bottom: 0px;">
+                                <pre>
+App.WidgetView = Ember.View.extend({
+ templateName: <span class="string">'widget'</span>,
+ didInsertElement: <span class="keyword">function</span>() {
+  <span class="keyword">var</span> widget = <span class="keyword">new</span> PerfectWidgets.Widget(
+    <span class="string">"root"</span>,
+    WidgetJson.Widget1);
+ }
+});</pre>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="rightColumn">
+                    <div class="tallStep">
+                        <div class="tallStepContent">
+                        	<h1>2</h1>
+                            <p>To bind slider to the model use addValueChangedHandler and addObserver:</p>
+                            <div class="smallCodeblock" style="margin-bottom: 0px;">
+                                <pre>
+<span class="keyword">function</span> BindSlider(widget, sliderName, observable, property) {
+ <span class="keyword">var</span> sliderObject = widget.getByName(sliderName);
+ sliderObject.addValueChangedHandler(<span class="keyword">function</span> () {
+  observable.set(property, sliderObject.getValue());
+ });
+ observable.addObserver(property, observable, <span class="keyword">function</span>(sender, key, value, rev){
+  sliderObject.setValue(sender.get(key));
+ });
+};</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div class="tutorialHeader">
+                <a href="http://perfectwidgets.com/order/download"><h1>DOWNLOAD PERFECT WIDGETS!</h1></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="content">
+            <p>&copy; 2002 - <span id="nowYear">2014</span> Perpetuum Software LLC The company of Enterra Inc. <a href="#">Terms Of Use</a> <a href="#">PrivacyPolicy</a> <a href="#">Site Map</a> </p>
+        </div>
+    </div>
+    </script>
+
+<script type="text/x-handlebars" data-template-name="widget">
+                        <div id="root" style="width:270px; height: 270px;">
+                        </div>
+                        <div class="controls">
+                            <div class="controlsColumn">
+                                {{input value=model.Slider1Value}}
+                                <span>Slider1 value</span><br />
+                                <button {{action "startAnimation"}}>Start animation</button>
+                            </div>
+                            <div class="controlsColumn">
+                                {{input value=model.Slider2Value}}
+                                <span>Slider2 value</span><br />
+                                <button {{action "stopAnimation"}}>Stop animation</button>
+                            </div>
+                        </div>
+                    </script>
+
+    <script src="Scripts/jquery-v1.11.1.js"></script>
+    <script src="Scripts/handlebars-v1.3.0.js"></script>
+    <script src="Scripts/ember-v1.6.1.js"></script>
+    <script src="Scripts/app.js"></script>
+</body>
+</html>
